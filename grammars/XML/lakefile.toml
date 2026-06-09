@@ -1,0 +1,18 @@
+name = "XmlGrammar"
+version = "0.1.0"
+defaultTargets = ["XmlGrammar"]
+
+[[require]]
+name = "LeanParser"
+path = "../../LeanParser"
+
+[[lean_lib]]
+name = "XmlGrammar"
+deps = ["LeanParser"]
+globs = ["Lexer", "Parser"]
+
+[[lean_exe]]
+name = "test"
+srcDir = "."
+root = "Test"
+deps = ["XmlGrammar"]
