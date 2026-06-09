@@ -1,0 +1,30 @@
+name = "CsvGrammar"
+version = "0.1.0"
+defaultTargets = ["CsvGrammar"]
+
+[[require]]
+name = "LeanParser"
+path = "../../LeanParser"
+
+[[lean_lib]]
+name = "CsvGrammar"
+deps = ["LeanParser"]
+globs = ["Lexer", "Parser", "Query"]
+
+[[lean_exe]]
+name = "test"
+srcDir = "."
+root = "Test"
+deps = ["CsvGrammar"]
+
+[[lean_exe]]
+name = "demo"
+srcDir = "."
+root = "Demo"
+deps = ["CsvGrammar"]
+
+[[lean_exe]]
+name = "csvcli"
+srcDir = "."
+root = "CsvCli"
+deps = ["CsvGrammar"]

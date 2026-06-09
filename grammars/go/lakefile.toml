@@ -1,0 +1,24 @@
+name = "GoGrammar"
+version = "0.1.0"
+defaultTargets = ["GoGrammar"]
+
+[[require]]
+name = "LeanParser"
+path = "../../LeanParser"
+
+[[lean_lib]]
+name = "GoGrammar"
+deps = ["LeanParser"]
+globs = ["Lexer", "Parser"]
+
+[[lean_exe]]
+name = "test"
+srcDir = "."
+root = "Test"
+deps = ["GoGrammar"]
+
+[[lean_exe]]
+name = "parse-one"
+srcDir = "."
+root = "ParseOne"
+deps = ["GoGrammar"]

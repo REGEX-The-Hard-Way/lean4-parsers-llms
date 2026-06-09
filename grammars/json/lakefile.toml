@@ -1,0 +1,42 @@
+name = "JsonGrammar"
+version = "0.1.0"
+defaultTargets = ["JsonGrammar"]
+
+[[require]]
+name = "LeanParser"
+path = "../../LeanParser"
+
+[[lean_lib]]
+name = "JsonGrammar"
+deps = ["LeanParser"]
+globs = ["Lexer", "JsonParser", "Query"]
+
+[[lean_exe]]
+name = "test"
+srcDir = "."
+root = "Test"
+deps = ["JsonGrammar"]
+
+[[lean_exe]]
+name = "cli"
+srcDir = "."
+root = "Main"
+deps = ["JsonGrammar"]
+
+[[lean_exe]]
+name = "queryDemo"
+srcDir = "."
+root = "QueryDemo"
+deps = ["JsonGrammar"]
+
+[[lean_exe]]
+name = "parse-file"
+srcDir = "."
+root = "ParseFile"
+deps = ["JsonGrammar"]
+
+[[lean_exe]]
+name = "query-file"
+srcDir = "."
+root = "QueryFile"
+deps = ["JsonGrammar"]
