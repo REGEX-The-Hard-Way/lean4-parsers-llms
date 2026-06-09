@@ -1,0 +1,64 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\begin{document}
+
+\begin{center}
+{\Large\bfseries PDF $\to$ Lean 4 $\to$ \LaTeX{} Round-Trip Demo}\\[1ex]
+{\small \today}
+\end{center}
+
+\section{Introduction}
+
+This document was produced by typesetting a \texttt{.tex} source with \texttt{pdflatex},
+then feeding the resulting PDF (after \texttt{mutool clean -d}) into our
+Lean-4 parser, which emitted a new \texttt{.tex} that was again compiled
+with \texttt{pdflatex}.  If you can read this paragraph, the round trip
+succeeded.
+
+\section{What the parser handles}
+
+\begin{itemize}
+\item Lexical layer: numbers, names, literal strings, hex strings, comments.
+\item All eight PDF object types, plus indirect references.
+\item Cross-reference \emph{tables} and (uncompressed) cross-reference
+      \emph{streams}; \texttt{Prev} chains for incremental updates.
+\item Object-stream resolution (\texttt{/Type /ObjStm}).
+\item Page tree walk and content-stream parsing.
+\item Text-state operators: \texttt{BT}, \texttt{ET}, \texttt{Tf},
+      \texttt{Td}, \texttt{TD}, \texttt{Tm}, \texttt{T*}, \texttt{Tj},
+      \texttt{TJ}, \texttt{'}, \texttt{"}.
+\item Graphics-state nesting (\texttt{q}/\texttt{Q}) and \texttt{cm}.
+\end{itemize}
+
+\section{Out of scope (preprocess required)}
+
+\begin{itemize}
+\item Flate/LZW decompression --- run \texttt{mutool clean -d} first.
+\item Encryption (RC4 / AES).
+\item Font CMaps --- only the predefined ASCII encodings render correctly.
+\item Vector graphics, images, colour.
+\end{itemize}
+
+\newpage
+
+\section{Page Two}
+
+A few mathematical expressions to push the parser:
+$$ \int_0^\infty e^{-x^2}\,dx = \frac{\sqrt{\pi}}{2}\qquad
+   \sum_{k=0}^{n} \binom{n}{k} = 2^n. $$
+
+A bullet list:
+\begin{itemize}
+\item alpha
+\item beta
+\item gamma
+\end{itemize}
+
+A numbered list:
+\begin{enumerate}
+\item one
+\item two
+\item three
+\end{enumerate}
+
+\end{document}

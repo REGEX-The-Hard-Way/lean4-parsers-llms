@@ -1,0 +1,249 @@
+(* ===================================================================== *)
+(*  EBNF grammar for PDF 1.7  (ISO 32000-1:2008)                          *)
+(*                                                                        *)
+(*  Notation: ISO/IEC 14977 EBNF                                          *)
+(*    | alternation     , concatenation     ; rule terminator             *)
+(*    [ x ]   optional  { x }   zero or more (x)+   one or more           *)
+(*    "abc"   literal byte string  ? text ?  informal description         *)
+(*    (* ... *) comments                                                  *)
+(*                                                                        *)
+(*  Bytes are represented as their ASCII character or as #xx (hex).       *)
+(*  Whitespace handling: between any two top-level tokens, the rule       *)
+(*    `ws` may appear; it is omitted in the productions for clarity       *)
+(*    except where the spec is explicit about EOL placement.              *)
+(* ===================================================================== *)
+
+
+(* ----------  1. Lexical layer  --------------------------------------- *)
+
+byte               = ? any byte 00–FF ? ;
+
+white_space_char   = #00 | #09 | #0A | #0C | #0D | #20 ;
+eol                = #0D #0A | #0D | #0A ;
+ws                 = { white_space_char | comment } ;
+ws1                = ( white_space_char | comment ) , ws ;          (* ≥1 *)
+
+delimiter_char     = "(" | ")" | "<" | ">" | "[" | "]"
+                   | "{" | "}" | "/" | "%" ;
+
+regular_char       = ? any byte that is neither white_space_char
+                       nor delimiter_char ? ;
+
+comment            = "%" , { ? any byte except CR or LF ? } , eol ;
+
+digit              = "0" | "1" | "2" | "3" | "4"
+                   | "5" | "6" | "7" | "8" | "9" ;
+octal_digit        = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" ;
+hex_digit          = digit | "A" | "B" | "C" | "D" | "E" | "F"
+                           | "a" | "b" | "c" | "d" | "e" | "f" ;
+sign               = "+" | "-" ;
+
+
+(* ----------  2. Atomic objects  -------------------------------------- *)
+
+boolean            = "true" | "false" ;
+null               = "null" ;
+
+integer            = [ sign ] , digit , { digit } ;
+
+real               = [ sign ] , (   digit , { digit } , "." , { digit }
+                                  | "." , digit , { digit }
+                                  | digit , { digit } , "." ) ;
+
+number             = real | integer ;
+
+
+(* ----- Strings -------------------------------------------------------- *)
+
+literal_string     = "(" , { lit_string_part } , ")" ;
+
+lit_string_part    = lit_balanced_paren                  (* nested () *)
+                   | escape_seq
+                   | lit_eol                             (* normalises to LF *)
+                   | ? any byte except "(", ")" or "\" ? ;
+
+lit_balanced_paren = "(" , { lit_string_part } , ")" ;
+
+escape_seq         = "\" , (   "n" | "r" | "t" | "b" | "f"
+                             | "(" | ")" | "\\"
+                             | octal_escape
+                             | line_continuation
+                             | ? any other byte (backslash ignored) ? ) ;
+
+octal_escape       = octal_digit , [ octal_digit , [ octal_digit ] ] ;
+line_continuation  = eol ;     (* \ + EOL  ->  produces no byte *)
+lit_eol            = eol ;     (* unescaped EOL inside a string -> 0x0A *)
+
+hex_string         = "<" , { hex_digit | white_space_char } , ">" ;
+
+
+(* ----- Names ---------------------------------------------------------- *)
+
+name               = "/" , { name_char } ;
+
+name_char          =   "#" , hex_digit , hex_digit            (* #xx escape *)
+                   | ? regular_char other than "#" ? ;
+
+
+(* ----------  3. Composite objects  ----------------------------------- *)
+
+array              = "[" , ws , { object , ws } , "]" ;
+
+dictionary         = "<<" , ws , { name , ws , object , ws } , ">>" ;
+
+(* Streams may only appear as the value of an indirect-object body. *)
+stream_object      = dictionary , ws ,
+                     "stream" , stream_eol ,
+                     stream_data ,
+                     [ eol ] , "endstream" ;
+
+stream_eol         = #0D #0A | #0A ;          (* not lone CR — § 7.3.8.1 *)
+
+stream_data        = ? exactly Length bytes (Length comes from the dict) ? ;
+
+
+(* ----- Indirect objects & references --------------------------------- *)
+
+obj_number         = digit , { digit } ;            (* > 0 *)
+gen_number         = digit , { digit } ;            (* ≥ 0 *)
+
+indirect_ref       = obj_number , ws1 , gen_number , ws1 , "R" ;
+
+indirect_object    = obj_number , ws1 , gen_number , ws1 , "obj" , ws ,
+                     ( object | stream_object ) , ws ,
+                     "endobj" ;
+
+
+(* ----- Generic object ------------------------------------------------- *)
+
+object             = boolean
+                   | null
+                   | number
+                   | literal_string
+                   | hex_string
+                   | name
+                   | array
+                   | dictionary
+                   | indirect_ref ;       (* not stream, not indirect-def *)
+
+
+(* ----------  4. File-level structure  -------------------------------- *)
+
+pdf_file           = header ,
+                     { body_section , xref_section , trailer_section } ,
+                     body_section , xref_section , trailer_section ,
+                     [ ws ] ;
+                     (* equivalent: one or more (body, xref, trailer) groups,
+                        the trailing one carries the final %%EOF *)
+
+header             = "%PDF-1." , pdf_minor , eol , [ binary_marker ] ;
+pdf_minor          = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" ;
+binary_marker      = "%" , high_byte , high_byte , high_byte , high_byte ,
+                     { high_byte } , eol ;
+high_byte          = ? byte ≥ 0x80 ? ;
+
+
+body_section       = { indirect_object , ws } ;
+
+
+(* ----- Classic cross-reference table --------------------------------- *)
+
+xref_section       = xref_table | xref_stream_section ;
+
+xref_table         = "xref" , eol , xref_subsection , { xref_subsection } ;
+
+xref_subsection    = obj_number , " " , obj_number , eol ,
+                     { xref_entry } ;     (* count of entries = 2nd number *)
+
+xref_entry         = inuse_entry | free_entry ;
+
+inuse_entry        = ten_digits , " " , five_digits , " " , "n" , entry_eol ;
+free_entry         = ten_digits , " " , five_digits , " " , "f" , entry_eol ;
+
+ten_digits         = digit , digit , digit , digit , digit ,
+                     digit , digit , digit , digit , digit ;
+five_digits        = digit , digit , digit , digit , digit ;
+entry_eol          = " " #0D | " " #0A | #0D #0A ;   (* exactly 2 bytes *)
+
+
+(* ----- Trailer (classic) --------------------------------------------- *)
+
+trailer_section    = trailer_dict_section ,
+                     "startxref" , eol ,
+                     byte_offset , eol ,
+                     "%%EOF" , [ eol ] ;
+
+trailer_dict_section
+                   = "trailer" , ws , dictionary , ws ;
+                                                   (* absent in pure-XRef-stream
+                                                      files; see below *)
+
+byte_offset        = digit , { digit } ;
+
+
+(* ----- Cross-reference stream (PDF 1.5+) ----------------------------- *)
+
+(* When an XRef stream is used in lieu of the table+trailer, the entire
+   xref+trailer group above is replaced by the indirect object whose
+   stream dictionary carries /Type /XRef and the merged trailer keys.
+   The startxref / %%EOF segment is unchanged but its offset points at
+   that indirect object. *)
+
+xref_stream_section
+                   = indirect_object ,           (* must be a stream w/ /Type /XRef *)
+                     "startxref" , eol ,
+                     byte_offset , eol ,
+                     "%%EOF" , [ eol ] ;
+
+
+(* ----------  5. Object streams (§ 7.5.7) ----------------------------- *)
+
+(* The decoded data of a stream whose dict has /Type /ObjStm is: *)
+objstm_data        = { ws , obj_number , ws1 , byte_offset } ,    (* N pairs *)
+                     ws ,
+                     { object , ws } ;          (* N objects, no obj/endobj *)
+
+
+(* ----------  6. Cross-reference stream data (§ 7.5.8.3) --------------- *)
+
+(* Each entry is a packed binary record whose three fields have widths
+   given by the /W array of the XRef-stream dictionary. *)
+
+xref_stream_entry  = field_type , field_2 , field_3 ;
+
+field_type         = byte ;     (* width = W[0]; if W[0]=0, defaults to 1 *)
+field_2            = { byte } ; (* width = W[1] *)
+field_3            = { byte } ; (* width = W[2] *)
+
+  (* Semantics:
+       type 0 : free    ( next-free-obj , next-gen )
+       type 1 : in-use  ( byte-offset    , generation )
+       type 2 : compr   ( objstm-objnum  , index-within-objstm )
+       any other type ⇒ treat referenced object as null *)
+
+
+(* ----------  7. Content-stream layer (§ 7.8.2) ----------------------- *)
+
+content_stream     = { ws , content_item } , ws ;
+
+content_item       = inline_image | operation ;
+
+operation          = { operand , ws1 } , operator ;
+
+operand            = boolean | null | number
+                   | literal_string | hex_string
+                   | name | array | dictionary ;     (* no stream, no R *)
+
+operator           = ? a keyword listed in Annex A — “PDF Content Stream
+                       Operators” (e.g. m, l, c, re, h, S, f, F, B, b, n,
+                       q, Q, cm, w, J, j, M, d, ri, i, gs, CS, cs, SC, sc,
+                       SCN, scn, G, g, RG, rg, K, k, sh, BI, ID, EI, Do,
+                       MP, DP, BMC, BDC, EMC, BX, EX, BT, ET, Tc, Tw, Tz,
+                       TL, Tf, Tr, Ts, Td, TD, Tm, T*, Tj, TJ, ', ", d0,
+                       d1, …) ? ;
+
+inline_image       = "BI" , ws ,
+                     { name , ws , object , ws } ,         (* image dict *)
+                     "ID" , ws ,                           (* one whitespace *)
+                     ? raw image bytes terminated by "EI" ? ,
+                     "EI" ;

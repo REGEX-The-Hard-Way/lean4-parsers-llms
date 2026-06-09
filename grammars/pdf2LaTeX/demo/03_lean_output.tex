@@ -1,0 +1,124 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage[margin=0pt,paperwidth=612pt,paperheight=792pt]{geometry}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+\begin{document}
+% --- page ---
+\begin{tikzpicture}[x=1pt,y=1pt]
+\useasboundingbox (0.000000,0.000000) rectangle (595.276000,841.890000);
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (114.863000pt,757.935000pt) {PDF};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (161.568000pt,757.935000pt) {!};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (185.240000pt,757.935000pt) {Lean 4};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (248.482000pt,757.935000pt) {!};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (272.154000pt,757.935000pt) {L};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (276.818000pt,761.544000pt) {A};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (284.069000pt,757.935000pt) {T};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (294.310000pt,754.109000pt) {E};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (304.601000pt,757.935000pt) {X Round-Trip Demo};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{10.909100}{13.090920}\selectfont] at (265.668000pt,738.341000pt) {May 10, 2026};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (72.000000pt,698.408000pt) {1 Introduction};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (72.000000pt,672.123000pt) {This document was produced by typesetting a};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (313.143000pt,672.123000pt) {.tex};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (341.653000pt,672.123000pt) {source with};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (404.149000pt,672.123000pt) {pdflatex};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (453.365000pt,672.123000pt) {, then feeding};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (72.000000pt,657.677000pt) {the resulting PDF (after};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (198.856000pt,657.677000pt) {mutool clean -d};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (291.135000pt,657.677000pt) {) into our Lean-4 parser, which emitted a new};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (72.000000pt,643.231000pt) {.tex};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (100.248000pt,643.231000pt) {that was again compiled with};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (254.106000pt,643.231000pt) {pdflatex};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (303.321000pt,643.231000pt) {. If you can read this paragraph, the round};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (72.000000pt,628.786000pt) {trip succeeded.};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (72.000000pt,588.852000pt) {2 What the parser handles};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,562.567000pt) {Lexical layer: numbers, names, literal strings, hex strings, comments.};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,538.159000pt) {All eight PDF object types, plus indirect references.};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,513.750000pt) {Cross-reference};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (182.199000pt,513.750000pt) {tables};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (215.320000pt,513.750000pt) {and (uncompressed) cross-reference};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (399.461000pt,513.750000pt) {streams};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (438.556000pt,513.750000pt) {;};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (445.601000pt,513.750000pt) {Prev};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (473.948000pt,513.750000pt) {chains for};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,499.304000pt) {incremental updates.};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,474.896000pt) {Object-stream resolution (};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (236.989000pt,474.896000pt) {/Type /ObjStm};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (316.964000pt,474.896000pt) {).};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,450.488000pt) {Page tree walk and content-stream parsing.};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,426.079000pt) {Text-state operators:};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (213.577000pt,426.079000pt) {BT};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (225.881000pt,426.079000pt) {,};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (233.035000pt,426.079000pt) {ET};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (245.339000pt,426.079000pt) {,};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (252.492000pt,426.079000pt) {Tf};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (264.796000pt,426.079000pt) {,};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (271.950000pt,426.079000pt) {Td};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (284.254000pt,426.079000pt) {,};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (291.407000pt,426.079000pt) {TD};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (303.711000pt,426.079000pt) {,};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (310.865000pt,426.079000pt) {Tm};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (323.169000pt,426.079000pt) {,};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (330.322000pt,426.079000pt) {T*};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (342.626000pt,426.079000pt) {,};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (349.780000pt,426.079000pt) {Tj};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (362.084000pt,426.079000pt) {,};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (369.238000pt,426.079000pt) {TJ};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (381.541000pt,426.079000pt) {,};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (388.695000pt,426.079000pt) {'};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (394.847000pt,426.079000pt) {,};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (402.001000pt,426.079000pt) {"};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (408.153000pt,426.079000pt) {.};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,401.671000pt) {Graphics-state nesting (};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (224.453000pt,401.671000pt) {q};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (230.605000pt,401.671000pt) {/};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (236.458000pt,401.671000pt) {Q};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (242.610000pt,401.671000pt) {) and};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (273.826000pt,401.671000pt) {cm};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (286.130000pt,401.671000pt) {.};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (72.000000pt,361.737000pt) {3 Out of scope (preprocess required)};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,335.452000pt) {Flate/LZW decompression | run};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (278.602000pt,335.452000pt) {mutool clean -d};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (374.783000pt,335.452000pt) {rst.};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,311.044000pt) {Encryption (RC4 / AES).};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,286.635000pt) {Font CMaps | only the predened ASCII encodings render correctly.};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,262.227000pt) {Vector graphics, images, colour.};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (294.711000pt,42.112000pt) {1};
+\end{tikzpicture}
+\clearpage
+% --- page ---
+\begin{tikzpicture}[x=1pt,y=1pt]
+\useasboundingbox (0.000000,0.000000) rectangle (595.276000,841.890000);
+\node[anchor=base west, inner sep=0pt, font=\fontsize{17.215400}{20.658480}\selectfont] at (72.000000pt,757.935000pt) {4 Page Two};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (72.000000pt,731.650000pt) {A few mathematical expressions to push the parser:};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{9.962600}{11.955120}\selectfont] at (208.113000pt,712.827000pt) {Z};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{7.970100}{9.564120}\selectfont] at (218.076000pt,709.672000pt) {1};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{7.970100}{9.564120}\selectfont] at (213.648000pt,690.189000pt) {0};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (229.035000pt,698.768000pt) {e};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{7.970100}{9.564120}\selectfont] at (241.047000pt,703.705000pt) {x};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{5.977600}{7.173120}\selectfont] at (245.813000pt,706.517000pt) {2};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (252.455000pt,698.768000pt) {dx};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (268.511000pt,698.768000pt) {=};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (282.132000pt,715.417000pt) {p};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (287.721000pt,690.568000pt) {2};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{7.970100}{9.564120}\selectfont] at (330.916000pt,711.720000pt) {n};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{9.962600}{11.955120}\selectfont] at (326.289000pt,708.731000pt) {X};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{7.970100}{9.564120}\selectfont] at (325.764000pt,686.592000pt) {k};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{7.970100}{9.564120}\selectfont] at (330.385000pt,686.592000pt) {=0};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (343.198000pt,698.768000pt) {nk};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (359.996000pt,698.768000pt) {= 2};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{7.970100}{9.564120}\selectfont] at (378.275000pt,703.705000pt) {n};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (383.911000pt,698.768000pt) {:};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (89.559000pt,664.342000pt) {A bullet list:};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,639.934000pt) {alpha};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,615.525000pt) {beta};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (101.265000pt,591.117000pt) {gamma};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (89.559000pt,566.708000pt) {A numbered list:};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (86.307000pt,542.300000pt) {1. one};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (86.307000pt,517.891000pt) {2. two};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (86.307000pt,493.483000pt) {3. three};
+\node[anchor=base west, inner sep=0pt, font=\fontsize{11.955200}{14.346240}\selectfont] at (294.711000pt,42.112000pt) {2};
+\end{tikzpicture}
+\clearpage
+\end{document}

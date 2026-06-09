@@ -1,0 +1,14 @@
+name = "pdf_lean"
+version = "0.1.0"
+defaultTargets = ["PdfLean", "pdf2tex"]
+
+[[lean_lib]]
+name = "PdfLean"
+
+[[lean_exe]]
+name = "pdf2tex"
+root = "Main"
+
+[[lean_exe]]
+name = "inspect"
+root = "Inspect"
