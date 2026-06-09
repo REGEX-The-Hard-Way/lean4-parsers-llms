@@ -1,0 +1,4 @@
+# Lake Build Outputs & Cache
+/build/
+/.lake/
+lake-manifest.json
